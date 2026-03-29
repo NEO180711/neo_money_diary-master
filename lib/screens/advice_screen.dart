@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 
 import '../repository/sql_diary_crud_repository.dart';
 import '../widgets/pair.dart';
-import 'ai_report_screen.dart';
 
 class EtcScreen extends StatefulWidget {
   const EtcScreen({super.key});
@@ -153,14 +152,6 @@ class _EtcScreenState extends State<EtcScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => AiReportScreen(categoryMoney: categoryMoney)),
-                          );
-                        },
-                        child: _buildMenuItem(Icons.auto_awesome_outlined, 'AI 소비 패턴 리포트')),
                       _buildMenuItem(Icons.manage_search_outlined, '데이터 쿼리'),
                       _buildMenuItem(Icons.query_stats_outlined, '월말 잔액 예측'),
                       _buildMenuItem(Icons.info_outline, '버전 정보'),
