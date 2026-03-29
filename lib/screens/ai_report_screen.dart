@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../models/diary_model.dart';
-import '../repository/sql_diary_crud_repository.dart';
 import '../services/gemini_service.dart';
 import '../utils/ai_formatter.dart';
+import '../widgets/pair.dart';
 
 class AiReportScreen extends StatefulWidget {
-  const AiReportScreen({super.key});
+  final List<Pair> categoryMoney;
+
+  const AiReportScreen({
+    super.key,
+    required this.categoryMoney,
+  });
 
   @override
   State<AiReportScreen> createState() => _AiReportScreenState();
@@ -26,10 +29,9 @@ class _AiReportScreenState extends State<AiReportScreen> {
   Future<void> _generateReport() async {
     setState(() => _isLoading = true);
     try {
-      final String currentMonth = DateFormat('yyyy-MM-dd').format(DateTime.now());
-      final List<Diary> diaries = await SqlDiaryCrudRepository.getMonthList(currentMonth);
-      final String formattedData = AiFormatter.formatDiaryList(diaries);
-      
+      // 전달받은 List<Pair> 데이터를 요약 문자열로 변환
+      final String formattedData = AiFormatter.formatCategoryList(widget.categoryMoney);
+
       final result = await _apiService.getAnalysisReport(formattedData);
       setState(() => _report = result);
     } catch (e) {

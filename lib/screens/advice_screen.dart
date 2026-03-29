@@ -157,7 +157,7 @@ class _EtcScreenState extends State<EtcScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const AiReportScreen()),
+                            MaterialPageRoute(builder: (context) => AiReportScreen(categoryMoney: categoryMoney)),
                           );
                         },
                         child: _buildMenuItem(Icons.auto_awesome_outlined, 'AI 소비 패턴 리포트')),
