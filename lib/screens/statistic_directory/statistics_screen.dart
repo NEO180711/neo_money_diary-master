@@ -102,7 +102,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('ABC 가계부 알아보기',
+                  title: Text('NEO가계부 알아보기',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -136,7 +136,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
                   SizedBox(
                     height: 3,
                   ),
-
+                  _buildSectionTitle('전체 지출 비율'),
                   //원형 통계부분
                   AspectRatio(
                     aspectRatio: 1,
@@ -148,6 +148,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
                     ),
                   ),
 
+                  _buildSectionTitle('전체 리스트'),
                   //리스트표 부분
                   AspectRatio(
                     aspectRatio: 1,
@@ -159,6 +160,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
                     ),
                   ),
 
+                  _buildSectionTitle('수입/지출 원형 차트'),
                   //ABC 원형 통계부분
                   AspectRatio(
                     aspectRatio: 1,
@@ -170,6 +172,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
                     ),
                   ),
 
+                  _buildSectionTitle('항목별 상세 리스트'),
                   //ABC 리스트표 부분
                   AspectRatio(
                     aspectRatio: 1,
@@ -189,6 +192,22 @@ class _StatisticScreenState extends State<StatisticScreen> {
     );
   }
 
+  // 섹션 제목 위젯 생성 함수
+  Widget _buildSectionTitle(String title) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Yeongdeok-Sea",
+          color: Colors.orange,
+        ),
+      ),
+    );
+  }
 
   //setState 간단하게 update로 만들어둔 곳
   void update() => setState(() {});

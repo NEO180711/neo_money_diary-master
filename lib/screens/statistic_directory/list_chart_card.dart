@@ -47,7 +47,7 @@ class _ListChartCardState extends State<ListChartCard> {
                 width: double.infinity,
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  "Total List",
+                  "전체 리스트",
                   style: TextStyle(
                       fontSize: 25,
                       color: Colors.orange,

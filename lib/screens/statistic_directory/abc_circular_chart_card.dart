@@ -24,7 +24,7 @@ class _AbcCircularChartCardState extends State<AbcCircularChartCard> {
     return categoryMoney;
   }
 
-  List abc = ['A', 'B', 'C'];
+  List abc = ['수입', '지출'];
   int index = 0;
 
   @override
@@ -53,7 +53,7 @@ class _AbcCircularChartCardState extends State<AbcCircularChartCard> {
                       height: 70,
                     ),
                     Text(
-                      "ABC Circular Chart",
+                      "원형 차트",
                       style: TextStyle(
                           fontSize: 25,
                           color: Colors.orange,
@@ -63,7 +63,7 @@ class _AbcCircularChartCardState extends State<AbcCircularChartCard> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          if (index == 2) {
+                          if (index == 1) {
                             index = 0;
                           } else {
                             index++;
@@ -97,7 +97,7 @@ class _AbcCircularChartCardState extends State<AbcCircularChartCard> {
                     height: 70,
                   ),
                   Text(
-                    "ABC Circular Chart",
+                    "원형 차트",
                     style: TextStyle(
                         fontSize: 25,
                         color: Colors.orange,
@@ -107,7 +107,7 @@ class _AbcCircularChartCardState extends State<AbcCircularChartCard> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        if (index == 2) {
+                        if (index == 1) {
                           index = 0;
                         } else {
                           index++;

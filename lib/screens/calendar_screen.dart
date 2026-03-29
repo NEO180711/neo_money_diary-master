@@ -53,7 +53,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               color: Colors.white,
               fontFamily: "Yeongdeok-Sea",
               fontWeight: FontWeight.w600),
-          title: Text('ABC 가계부'),
+          title: Text('NEO가계부'),
         ),
 
         body: Column(

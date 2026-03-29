@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../repository/sql_diary_crud_repository.dart';
+import '../models/diary_model.dart';
 
 class TotalAbcMoney extends StatelessWidget {
   final String diaryMonth;
@@ -39,7 +40,7 @@ class TotalAbcMoney extends StatelessWidget {
             Flexible(
               flex: 1,
               child: FutureBuilder(
-                future: _loadTotalMoneyA(),
+                future: _loadTotalMoney('수입'),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(
@@ -55,7 +56,7 @@ class TotalAbcMoney extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'A',
+                            '수입',
                             style: TextStyle(
                               color: Colors.black,
                                 fontFamily: "Yeongdeok-Sea",
@@ -83,7 +84,7 @@ class TotalAbcMoney extends StatelessWidget {
             Flexible(
               flex: 1,
               child: FutureBuilder(
-                future: _loadTotalMoneyB(),
+                future: _loadTotalMoney('지출'),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(
@@ -99,7 +100,7 @@ class TotalAbcMoney extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'B',
+                            '지출',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: "Yeongdeok-Sea",
@@ -127,7 +128,7 @@ class TotalAbcMoney extends StatelessWidget {
             Flexible(
               flex: 1,
               child: FutureBuilder(
-                future: _loadTotalMoneyC(),
+                future: _loadSumMoney(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(
@@ -143,7 +144,7 @@ class TotalAbcMoney extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'C',
+                            '합계',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: "Yeongdeok-Sea",
@@ -176,19 +177,30 @@ class TotalAbcMoney extends StatelessWidget {
 
   const TotalAbcMoney({super.key, required this.diaryMonth});
 
-  //A 합 가져오기
-  Future<String> _loadTotalMoneyA() async {
-    return await SqlDiaryCrudRepository.getTotalMoneyA(diaryMonth);
+  // 특정 타입(수입/지출)의 합계 계산
+  Future<String> _loadTotalMoney(String type) async {
+    List<Diary> list = await SqlDiaryCrudRepository.getMonthList(diaryMonth);
+    int total = 0;
+    for (var diary in list) {
+      if (diary.type == type) {
+        total += int.parse(diary.money ?? '0');
+      }
+    }
+    return total.toString();
   }
 
-  //B 합 가져오기
-  Future<String> _loadTotalMoneyB() async {
-    return await SqlDiaryCrudRepository.getTotalMoneyB(diaryMonth);
+  // 합계 계산 (수입 - 지출)
+  Future<String> _loadSumMoney() async {
+    List<Diary> list = await SqlDiaryCrudRepository.getMonthList(diaryMonth);
+    int income = 0;
+    int expense = 0;
+    for (var diary in list) {
+      if (diary.type == '수입') {
+        income += int.parse(diary.money ?? '0');
+      } else if (diary.type == '지출') {
+        expense += int.parse(diary.money ?? '0');
+      }
+    }
+    return (income - expense).toString();
   }
-
-  //C 합 가져오기
-  Future<String> _loadTotalMoneyC() async {
-    return await SqlDiaryCrudRepository.getTotalMoneyC(diaryMonth);
-  }
-
 }

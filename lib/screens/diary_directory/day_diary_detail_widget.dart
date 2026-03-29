@@ -85,9 +85,12 @@ class _DayDiaryDetailWidgetState extends State<DayDiaryDetailWidget> {
     return AlertDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: Text(widget.diary.type!),
+      title: Text('NEO가계부 상세정보'),
       titleTextStyle: TextStyle(
-          color: Colors.red, fontSize: 50, fontWeight: FontWeight.w600),
+          color: Colors.orange,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          fontFamily: "Soyo"),
       scrollable: true,
       surfaceTintColor: Colors.white,
 
@@ -98,6 +101,14 @@ class _DayDiaryDetailWidgetState extends State<DayDiaryDetailWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Text(
+                '유형 : ${widget.diary.type}',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.redAccent,
+                    fontFamily: "HakgyoansimWoojuR"),
+              ),
               SizedBox(height: 10,),
               Text(
                 '금액 : ${moneyToString(widget.diary.money!)} 원',

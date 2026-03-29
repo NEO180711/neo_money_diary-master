@@ -23,7 +23,7 @@ class _AbcListChartCardState extends State<AbcListChartCard> {
     return categoryMoney;
   }
 
-  List abc = ['A', 'B', 'C'];
+  List abc = ['수입', '지출'];
   int index = 0;
 
   @override
@@ -50,7 +50,7 @@ class _AbcListChartCardState extends State<AbcListChartCard> {
                 children: [
                   SizedBox(width: 50, height: 65),
                   Text(
-                    '${abc[index]} type List',
+                    '${abc[index]} 리스트',
                     style: TextStyle(
                         fontSize: 25,
                         color: Colors.orange,
@@ -60,7 +60,7 @@ class _AbcListChartCardState extends State<AbcListChartCard> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        if (index == 2) {
+                        if (index == 1) {
                           index = 0;
                         } else {
                           index++;

@@ -44,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
             color: Colors.white,
             fontFamily: "Yeongdeok-Sea",
             fontWeight: FontWeight.w600),
-        title: Text('ABC 가계부'),
+        title: Text('NEO가계부'),
       ),
       body: Column(
         children: [
@@ -99,7 +99,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             height: 10,
                           ),
                           Text(
-                            'Tip) ABC, 분류, 내용, 메모 를 검색할 수 있습니다',
+                            'Tip) 유형, 분류, 내용, 메모 를 검색할 수 있습니다',
                             style: TextStyle(fontSize: 13, color: Colors.grey),
                           )
                         ],
@@ -111,8 +111,22 @@ class _SearchScreenState extends State<SearchScreen> {
                     itemCount: datas.length,
 
                     itemBuilder: (BuildContext context, int index) {
-                      return DayDiaryWidget(
-                        diary: datas[index],
+                      return Dismissible(
+                        key: Key(datas[index].id.toString()),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          color: Colors.red,
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: const Icon(Icons.delete, color: Colors.white),
+                        ),
+                        onDismissed: (direction) async {
+                          await SqlDiaryCrudRepository.delete(datas[index].id!);
+                          setState(() {}); // 삭제 후 목록 갱신
+                        },
+                        child: DayDiaryWidget(
+                          diary: datas[index],
+                        ),
                       );
                     },
                   );

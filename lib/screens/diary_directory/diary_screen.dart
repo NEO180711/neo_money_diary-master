@@ -99,7 +99,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('ABC 가계부 알아보기',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold, fontFamily: "Soyo")),
+                  title: Text('NEO가계부 알아보기',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold, fontFamily: "Soyo")),
                   content: DescriptionDiary(),
                 ),
               );
@@ -270,4 +270,3 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
   void onTapDescription() {}
 }
-

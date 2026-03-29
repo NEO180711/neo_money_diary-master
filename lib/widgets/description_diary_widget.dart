@@ -13,11 +13,11 @@ class DescriptionDiary extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text('ABC 가계부란?',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, fontFamily: "Soyo")),
+            Text('NEO가계부란?',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, fontFamily: "Soyo")),
 
             Divider(color: Colors.black,thickness: 2,),
 
-            Text('ABC 가계부는 지출을 크게 세 가지로 분류합니다.'),
+            Text('NEO가계부는 지출을 크게 세 가지로 분류합니다.'),
 
             SizedBox(height: 10,),
 
@@ -55,7 +55,7 @@ class DescriptionDiary extends StatelessWidget {
 
             SizedBox(height: 30,),
             Divider(color: Colors.black,thickness: 2,),
-            Text('오늘부터 ABC 가계부를 쓰면서 \n줄일 건 줄이고, 저축을 늘리는 재미를 찾아보시기 바랍니다.',),
+            Text('오늘부터 NEO가계부를 쓰면서 \n줄일 건 줄이고, 저축을 늘리는 재미를 찾아보시기 바랍니다.',),
             SizedBox(height: 20,),
             Text('이것이 부자가 되는 \n첫걸음입니다.',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, fontFamily: "Soyo")),
 

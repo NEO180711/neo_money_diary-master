@@ -31,7 +31,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('금액이 없습니다'),
+          title: Text('NEO가계부 - 금액 확인'),
           content: Text('저장하시겠습니까?'),
           actions: [
             ElevatedButton(
@@ -113,7 +113,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
         automaticallyImplyLeading: false,
 
         title: Text(
-          'ABC 가계부',
+          'NEO가계부',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w600,
@@ -128,7 +128,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('ABC 가계부 작성법',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold, fontFamily: "Soyo")),
+                  title: Text('NEO가계부 작성법',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold, fontFamily: "Soyo")),
                   content: DescriptionWriteDiary(),
                 ),
               );
@@ -169,33 +169,22 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
                 onPressed: onTapToggleButton,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                     child: Text(
-                      'A',
+                      '수입',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
                         fontFamily: "Yeongdeok-Sea",
                       ),
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                     child: Text(
-                      'B',
+                      '지출',
                       style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "Yeongdeok-Sea",
-                      ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-                    child: Text(
-                      'C',
-                      style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
                         fontFamily: "Yeongdeok-Sea",
                       ),
@@ -527,10 +516,9 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
 
 
   // ABC 선택 관련 변수
-  String abc = 'C'; //일단 기본적으로 모든 소비는 불필요하다는 느낌을 주기 위해 디폴트값은 C로 설정
+  String abc = '지출'; 
   bool aButton = false;
-  bool bButton = false;
-  bool cButton = false;
+  bool bButton = true;
   late List<bool> isSelected;
 
   //ABC 버튼 선택
@@ -538,22 +526,14 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
     if (index == 0) {
       aButton = true;
       bButton = false;
-      cButton = false;
-      abc = 'A';
+      abc = '수입';
     } else if (index == 1) {
       aButton = false;
       bButton = true;
-      cButton = false;
-      abc = 'B';
-    }
-    if (index == 2) {
-      aButton = false;
-      bButton = false;
-      cButton = true;
-      abc = 'C';
+      abc = '지출';
     }
     setState(() {
-      isSelected = [aButton, bButton, cButton];
+      isSelected = [aButton, bButton];
     });
   }
 
@@ -691,7 +671,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
 
   @override
   void initState() {
-    isSelected = [aButton, bButton, cButton];
+    isSelected = [aButton, bButton];
     super.initState();
 
     _moneyTextEditingController.text = '0';
