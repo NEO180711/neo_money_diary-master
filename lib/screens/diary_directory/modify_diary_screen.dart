@@ -1,7 +1,7 @@
 //가계부 수정하는 화면
 
 import 'package:abc_money_diary/models/diary_model.dart';
-import 'package:abc_money_diary/repository/sql_diary_crud_repository.dart';
+import 'package:abc_money_diary/repository/supabase_diary_repository.dart';
 import 'package:abc_money_diary/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -83,7 +83,7 @@ class _ModifyDiaryScreenState extends State<ModifyDiaryScreen> {
                         builder: (context) => HomeScreen(),
                       ),
                       (route) => false);
-                  await SqlDiaryCrudRepository.update(modifyDiary);
+                  await SupabaseRepository.update(modifyDiary);
                   update();
                 },
                 child: Text('예')),
@@ -114,7 +114,7 @@ class _ModifyDiaryScreenState extends State<ModifyDiaryScreen> {
             builder: (context) => HomeScreen(),
           ),
           (route) => false);
-      await SqlDiaryCrudRepository.update(modifyDiary);
+      await SupabaseRepository.update(modifyDiary);
       update();
     }
   }

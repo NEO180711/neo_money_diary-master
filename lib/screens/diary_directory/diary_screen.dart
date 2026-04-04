@@ -1,7 +1,7 @@
 //홈 화면 중 다이어리 칸
 
 import 'package:abc_money_diary/models/diary_model.dart';
-import 'package:abc_money_diary/repository/sql_diary_crud_repository.dart';
+import 'package:abc_money_diary/repository/supabase_diary_repository.dart';
 import 'package:abc_money_diary/screens/diary_directory/write_diary_screen.dart';
 import 'package:abc_money_diary/widgets/description_diary_widget.dart';
 import 'package:flutter/material.dart';
@@ -234,7 +234,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
   //한달치 가계부 목록 가져오기
   Future<List<Diary>> _loadDiaryList(String month) async {
-    return await SqlDiaryCrudRepository.getMonthList(month);
+    return await SupabaseRepository.getMonthList(month);
   }
 
   //ABC 금액들 보여줄 때 작동하는 부분들

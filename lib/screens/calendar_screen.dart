@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../models/diary_model.dart';
-import '../repository/sql_diary_crud_repository.dart';
+import '../repository/supabase_diary_repository.dart';
 import 'diary_directory/day_diary_widget.dart';
 import 'diary_directory/write_diary_screen.dart';
 
@@ -210,7 +210,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   //하루치 가계부 목록 가져오기
   Future<List<Diary>> _loadDiaryList(DateTime date) async {
-    return await SqlDiaryCrudRepository.getDayList(
+    return await SupabaseRepository.getDayList(
         DateFormat('yyyy-MM-dd').format(date));
   }
 }

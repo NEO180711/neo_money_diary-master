@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../repository/sql_diary_crud_repository.dart';
+import '../../repository/supabase_diary_repository.dart';
 import '../../widgets/pair.dart';
 import 'list_category_screen.dart';
 
@@ -18,7 +18,7 @@ class _ListChartCardState extends State<ListChartCard> {
   Map<String, String> categoryMap = {};
 
   Future<List<Pair>> _getTotalCategory(String month) async {
-    List<Pair> newList = await SqlDiaryCrudRepository.getTotalCategory(month);
+    List<Pair> newList = await SupabaseRepository.getTotalCategory(month);
     categoryMoney = newList;
     return categoryMoney;
   }

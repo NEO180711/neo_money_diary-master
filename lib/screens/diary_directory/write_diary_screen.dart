@@ -1,7 +1,7 @@
 //신규 가계부 작성하는 화면
 
 import 'package:abc_money_diary/models/diary_model.dart';
-import 'package:abc_money_diary/repository/sql_diary_crud_repository.dart';
+import 'package:abc_money_diary/repository/supabase_diary_repository.dart';
 import 'package:abc_money_diary/widgets/description_write_diary_widget.dart';
 import 'package:abc_money_diary/widgets/select_category_widget.dart';
 import 'package:abc_money_diary/widgets/select_payment_widget.dart';
@@ -54,7 +54,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
                   );
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await SqlDiaryCrudRepository.create(diary);
+                  await SupabaseRepository.create(diary);
 
                   update();
                 },
@@ -85,7 +85,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
             : _paymentTextEditingController.text,
       );
       Navigator.pop(context);
-      await SqlDiaryCrudRepository.create(diary);
+      await SupabaseRepository.create(diary);
 
       update();
     }

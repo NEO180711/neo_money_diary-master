@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../repository/sql_diary_crud_repository.dart';
+import '../repository/supabase_diary_repository.dart';
 import '../widgets/pair.dart';
 import 'fixed_expense_screen.dart';
 import 'installment_management_screen.dart';
@@ -35,7 +35,7 @@ class _EtcScreenState extends State<EtcScreen> {
 
   Future<List<Pair>> _getABCcategory(String month) async {
     List<Pair> newList =
-        await SqlDiaryCrudRepository.getABCcategory(month, 'C');
+        await SupabaseDiaryRepository.getABCcategory(month, 'C');
     categoryMoney = newList;
     return categoryMoney;
   }

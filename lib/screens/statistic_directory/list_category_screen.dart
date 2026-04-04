@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/diary_model.dart';
-import '../../repository/sql_diary_crud_repository.dart';
+import '../../repository/supabase_diary_repository.dart';
 import '../diary_directory/day_diary_widget.dart';
 
 class ListCategoryScreen extends StatefulWidget {
@@ -172,7 +172,7 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
   }
 
   Future<List<Diary>> _loadDiaryList(String text, String month) async {
-    return await SqlDiaryCrudRepository.getSearchList(text, month);
+    return await SupabaseRepository.getSearchList(text, month);
   }
 
   //돈 3글자마다 ',' 넣어주기

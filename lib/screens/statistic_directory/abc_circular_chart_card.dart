@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../repository/sql_diary_crud_repository.dart';
+import '../../repository/supabase_diary_repository.dart';
 import '../../widgets/pair.dart';
 import 'abc_circle_category_screen.dart';
 
@@ -19,7 +19,7 @@ class _AbcCircularChartCardState extends State<AbcCircularChartCard> {
 
   Future<List<Pair>> _getABCcategory(String month, String abc) async {
     List<Pair> newList =
-        await SqlDiaryCrudRepository.getABCcategory(month, abc);
+        await SupabaseRepository.getABCcategory(month, abc);
     categoryMoney = newList;
     return categoryMoney;
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../repository/sql_diary_crud_repository.dart';
+import '../repository/supabase_diary_repository.dart';
 
 class InstallmentManagementScreen extends StatefulWidget {
   const InstallmentManagementScreen({super.key});
@@ -25,7 +25,7 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
   }
 
   Future<void> _loadData() async {
-    final data = await SqlDiaryCrudRepository.getInstallmentList();
+    final data = await SupabaseRepository.getInstallmentList();
     setState(() {
       _installments = data;
     });
@@ -102,7 +102,7 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
                       int months = int.parse(_monthController.text);
                       int monthly = (total / months).floor();
 
-                      await SqlDiaryCrudRepository.createInstallment({
+                      await SupabaseRepository.createInstallment({
                         'name': _nameController.text,
                         'totalPrice': total,
                         'months': months,
@@ -171,7 +171,7 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
                             ],
                           ),
                           onLongPress: () async {
-                            await SqlDiaryCrudRepository.deleteInstallment(item['id']);
+                            await SupabaseRepository.deleteInstallment(item['id']);
                             _loadData();
                           },
                         ),

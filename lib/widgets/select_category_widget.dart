@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/category.dart'; // 기존 category1, category2 등이 정의된 파일
-import '../repository/sql_diary_crud_repository.dart';
+import '../repository/supabase_diary_repository.dart';
 
 class SelectCategoryWidget extends StatefulWidget {
   final TextEditingController categoryController;
@@ -31,7 +31,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
   }
 
   Future<void> _loadDbCategories() async {
-    final list = await SqlDiaryCrudRepository.getCategoryList();
+    final list = await SupabaseRepository.getCategoryList();
     setState(() {
       _dbCategories = list;
     });

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../models/diary_model.dart';
-import '../repository/sql_diary_crud_repository.dart';
+import '../repository/supabase_diary_repository.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -121,7 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: const Icon(Icons.delete, color: Colors.white),
                         ),
                         onDismissed: (direction) async {
-                          await SqlDiaryCrudRepository.delete(datas[index].id!);
+                          await SupabaseDiaryRepository.delete(datas[index].id!);
                           setState(() {}); // 삭제 후 목록 갱신
                         },
                         child: DayDiaryWidget(
@@ -144,6 +144,6 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<List<Diary>> _loadDiaryList(String text) async {
-    return await SqlDiaryCrudRepository.getSearchAllList(text);
+    return await SupabaseDiaryRepository.getSearchAllList(text);
   }
 }

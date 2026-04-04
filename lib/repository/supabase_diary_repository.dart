@@ -1,49 +1,60 @@
 import 'package:abc_money_diary/repository/sql_database.dart';
 import 'package:abc_money_diary/widgets/pair.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/diary_model.dart';
 import 'package:flutter/material.dart';
 
-class SqlDiaryCrudRepository {
+class SupabaseDiaryRepository {
   static const String categoryTableName = 'category';
   static const String installmentTableName = 'installment';
 
-  /* 카테고리 관련 메서드 */
-
-  // 카테고리 목록 불러오기
+   /* 카테고리 관련 메서드 (Supabase 버전) */
+  
+  // 1. 카테고리 목록 불러오기
   static Future<List<Map<String, dynamic>>> getCategoryList() async {
-    var db = await SqlDataBase().database;
-    // query()는 결과가 없으면 빈 리스트 []를 반환하므로 try-catch가 필수적이지는 않으나 안전을 위해 유지 가능합니다.
-    return await db.query(categoryTableName, orderBy: 'name ASC');
-  }
-
-  // 카테고리 추가
-  static Future<int> createCategory(String name, int iconCode) async {
-    var db = await SqlDataBase().database;
-    return await db.insert(categoryTableName, {
-      'name': name,
-      'iconCode': iconCode,
-    });
-  }
-
-  static Future<int> updateCategory(int id, String name, int iconCode) async {
-    var db = await SqlDataBase().database;
-    return await db.update(
-      categoryTableName,
-      {'name': name, 'iconCode': iconCode},
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    // supabase 클라이언트 호출
+    final supabase = Supabase.instance.client;
+    
+    // 'category' 테이블에서 이름 오름차순으로 모든 데이터 선택
+    final data = await supabase
+        .from('category')
+        .select()
+        .order('name', ascending: true);
+        
+    return data as List<Map<String, dynamic>>;
   }
   
-  // 카테고리 삭제 (이미 있다면 유지)
-  static Future<int> deleteCategory(int id) async {
-    var db = await SqlDataBase().database;
-    return await db.delete(
-      categoryTableName, 
-      where: 'id = ?', 
-      whereArgs: [id]
-    );
+  // 2. 카테고리 추가
+  static Future<void> createCategory(String name, String icon) async {
+    final supabase = Supabase.instance.client;
+    
+    // 'category' 테이블에 새로운 행 삽입
+    await supabase.from('category').insert({
+      'name': name,
+      'icon': icon,
+    });
+  }
+  
+  // 3. 카테고리 수정
+  static Future<void> updateCategory(int id, String name, String icon) async {
+    final supabase = Supabase.instance.client;
+    
+    // 해당 id를 가진 행의 name과 iconCode 업데이트
+    await supabase
+        .from('category')
+        .update({'name': name, 'icon': icon})
+        .eq('id', id); // SQLite의 whereArgs 대신 .eq() 사용
+  }
+  
+  // 4. 카테고리 삭제
+  static Future<void> deleteCategory(int id) async {
+    final supabase = Supabase.instance.client;
+    
+    // 해당 id를 가진 행 삭제
+    await supabase
+        .from('category')
+        .delete()
+        .eq('id', id);
   }
 
   /* 할부 관련 메서드 */

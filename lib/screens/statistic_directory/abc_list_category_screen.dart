@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/diary_model.dart';
-import '../../repository/sql_diary_crud_repository.dart';
+import '../../repository/supabase_diary_repository.dart';
 import '../diary_directory/day_diary_widget.dart';
 
 class ABCListCategoryScreen extends StatefulWidget {
@@ -180,7 +180,7 @@ class _ABCListCategoryScreenState extends State<ABCListCategoryScreen> {
   }
 
   Future<List<Diary>> _loadDiaryList(String text, String month, String abc) async {
-    return await SqlDiaryCrudRepository.getSearchABCList(text, month, abc);
+    return await SupabaseRepository.getSearchABCList(text, month, abc);
   }
 
   void update() => setState(() {});
