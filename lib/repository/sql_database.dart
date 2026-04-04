@@ -54,24 +54,25 @@ class SqlDataBase {
     ''');
 
     // 3. 할부 테이블 생성 (추가됨)
+    // 이것은 .dart 파일 안에 들어가는 코드입니다.
     await db.execute('''
-              create table installment (
-                id integer primary key autoincrement,
-                name text,
-                totalPrice integer,           -- 추가
-                remaining_principal integer,   -- 추가
-                months integer,
-                remaining_months integer,
-                monthlyPrice integer,
-                paymentMethod text,
-                payDay integer,
-                interestType text,
-                interestRate real,
-                freeMonths integer,
-                isNotificationOn integer,     -- bool 대신 integer (0 또는 1)
-                startDate text
-              )
-        ''');
+      CREATE TABLE installments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        totalPrice INTEGER NOT NULL,
+        remaining_principal INTEGER NOT NULL,
+        months INTEGER NOT NULL,
+        remaining_months INTEGER NOT NULL,
+        monthlyPrice INTEGER NOT NULL,
+        payDay INTEGER NOT NULL,
+        paymentMethod TEXT,
+        interestType TEXT NOT NULL,
+        interestRate REAL DEFAULT 0,
+        freeMonths INTEGER DEFAULT 0,
+        isNotificationOn INTEGER DEFAULT 1,
+        startDate TEXT DEFAULT (date('now'))
+      )
+    ''');
   }
 
   void closeDataBase() async {

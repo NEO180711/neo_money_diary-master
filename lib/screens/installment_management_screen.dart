@@ -43,9 +43,9 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
         id: item['id'],
         name: item['name'] ?? '항목 없음',
         totalPrice: item['totalPrice'] ?? 0,
-        monthlyPrice: item['monthlyPrice'] ?? 0,
         totalMonths: item['months'] ?? 1,
-        currentMonth: item['currentMonth'] ?? 1,
+        remainingMonths: item['remaining_months'] ?? 1,
+        monthlyPrice: item['monthlyPrice'] ?? 0,
         paymentMethod: item['paymentMethod'] ?? '신용카드',
         isInterestFree: item['interestType'] == '무이자',
         interestRate: (item['interestRate'] ?? 0.0).toDouble(),
@@ -179,25 +179,36 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_nameController.text.isNotEmpty) {
+                        // 1. 입력값 읽기
                         int total = int.tryParse(_totalPriceController.text) ?? 0;
+                        int remainingAmt = int.tryParse(_remainingPriceController.text) ?? total; // 사용자가 입력한 '남은 금액'
                         int months = int.tryParse(_monthController.text) ?? 1;
-                        int monthly = (total / months).floor();
+                        int remainingMonths = int.tryParse(_remainingMonthController.text) ?? months;
 
+                        // 2. 💡 핵심 계산: 남은 금액을 남은 개월로 나눕니다.
+                        // 예: 6,000,000원 / 6개월 = 1,000,000원 (한 달 납입금)
+                        int monthly = (remainingMonths > 0) ? (remainingAmt / remainingMonths).floor() : 0;
+
+                        // 3. 현재 회차 역산 (12 - 6 + 1 = 7회차)
+                        int calculatedCurrentMonth = months - remainingMonths + 1;
+
+                        // 4. DB 저장
                         await SupabaseDiaryRepository.createInstallment({
                           'name': _nameController.text,
                           'totalPrice': total,
-                          'remaining_principal': int.tryParse(_remainingPriceController.text) ?? total,
+                          'remaining_principal': remainingAmt, // 입력한 600만 원 그대로 저장
                           'months': months,
-                          'remaining_months': int.tryParse(_remainingMonthController.text) ?? months,
-                          'monthlyPrice': monthly,
+                          'remaining_months': remainingMonths,
+                          'currentMonth': calculatedCurrentMonth,
                           'paymentMethod': _paymentMethodController.text,
-                          'payDay': int.parse(_dayController.text),
+                          'payDay': int.tryParse(_dayController.text) ?? 1,
                           'interestType': interestType,
                           'interestRate': double.tryParse(_interestRateController.text) ?? 0.0,
                           'freeMonths': int.tryParse(_freeMonthController.text) ?? 0,
                           'isNotificationOn': _isNotificationOn,
                           'startDate': DateFormat('yyyy-MM-dd').format(DateTime.now()),
                         });
+
                         _loadData();
                         Navigator.pop(context);
                       }
