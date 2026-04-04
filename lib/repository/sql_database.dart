@@ -55,12 +55,23 @@ class SqlDataBase {
 
     // 3. 할부 테이블 생성 (추가됨)
     await db.execute('''
-          create table installment (
-            id integer primary key autoincrement,
-            name text,
-            amount integer
-          )
-    ''');
+              create table installment (
+                id integer primary key autoincrement,
+                name text,
+                totalPrice integer,           -- 추가
+                remaining_principal integer,   -- 추가
+                months integer,
+                remaining_months integer,
+                monthlyPrice integer,
+                paymentMethod text,
+                payDay integer,
+                interestType text,
+                interestRate real,
+                freeMonths integer,
+                isNotificationOn integer,     -- bool 대신 integer (0 또는 1)
+                startDate text
+              )
+        ''');
   }
 
   void closeDataBase() async {
