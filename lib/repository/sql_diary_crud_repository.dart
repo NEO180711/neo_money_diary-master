@@ -26,10 +26,24 @@ class SqlDiaryCrudRepository {
     });
   }
 
-  // 카테고리 삭제
+  static Future<int> updateCategory(int id, String name, int iconCode) async {
+    var db = await SqlDataBase().database;
+    return await db.update(
+      categoryTableName,
+      {'name': name, 'iconCode': iconCode},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+  
+  // 카테고리 삭제 (이미 있다면 유지)
   static Future<int> deleteCategory(int id) async {
     var db = await SqlDataBase().database;
-    return await db.delete(categoryTableName, where: 'id = ?', whereArgs: [id]);
+    return await db.delete(
+      categoryTableName, 
+      where: 'id = ?', 
+      whereArgs: [id]
+    );
   }
 
   /* 할부 관련 메서드 */

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../repository/sql_diary_crud_repository.dart';
 import '../widgets/pair.dart';
@@ -17,6 +18,20 @@ class EtcScreen extends StatefulWidget {
 
 class _EtcScreenState extends State<EtcScreen> {
   List<Pair> categoryMoney = [];
+  String _appVersion = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = info.version;
+    });
+  }
 
   Future<List<Pair>> _getABCcategory(String month) async {
     List<Pair> newList =
@@ -173,7 +188,19 @@ class _EtcScreenState extends State<EtcScreen> {
                           MaterialPageRoute(builder: (context) => const FixedExpenseScreen()),
                         );
                       }),
-                      _buildMenuItem(Icons.info_outline, '버전 정보', () {}),
+                      _buildMenuItem(Icons.info_outline, '버전 정보', () {
+                        showAboutDialog(
+                          context: context,
+                          applicationName: 'NEO가계부',
+                          applicationVersion: _appVersion,
+                          applicationIcon: const Icon(
+                            Icons.account_balance_wallet,
+                            size: 50,
+                            color: Colors.orange,
+                          ),
+                          applicationLegalese: '© 2024 KimHanYeol',
+                        );
+                      }),
                     ],
                   ),
                   const SizedBox(height: 25),
@@ -189,6 +216,35 @@ class _EtcScreenState extends State<EtcScreen> {
                 ],
               ),
             ),
+
+            const SizedBox(height: 10),
+            // 요청하신 ListTile 형태의 버전 정보 표시 영역
+            Container(
+              color: Colors.white,
+              child: ListTile(
+                leading: const Icon(Icons.info_outline, color: Colors.orange),
+                title: const Text(
+                  '버전 정보',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                subtitle: Text('현재 버전: $_appVersion'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  showAboutDialog(
+                    context: context,
+                    applicationName: 'NEO가계부',
+                    applicationVersion: _appVersion,
+                    applicationIcon: const Icon(
+                      Icons.account_balance_wallet,
+                      size: 50,
+                      color: Colors.orange,
+                    ),
+                    applicationLegalese: '© 2024 KimHanYeol',
+                  );
+                },
+              ),
+            ),
+            const Divider(height: 1, thickness: 0.5),
 
           ],
         ),
