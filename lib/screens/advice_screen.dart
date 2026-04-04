@@ -4,6 +4,9 @@ import 'package:intl/intl.dart';
 
 import '../repository/sql_diary_crud_repository.dart';
 import '../widgets/pair.dart';
+import 'fixed_expense_screen.dart';
+import 'installment_management_screen.dart';
+import 'category_management_screen.dart';
 
 class EtcScreen extends StatefulWidget {
   const EtcScreen({super.key});
@@ -152,19 +155,35 @@ class _EtcScreenState extends State<EtcScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildMenuItem(Icons.manage_search_outlined, '데이터 쿼리'),
-                      _buildMenuItem(Icons.query_stats_outlined, '월말 잔액 예측'),
-                      _buildMenuItem(Icons.info_outline, '버전 정보'),
+                      _buildMenuItem(Icons.category_outlined, '카테고리 관리', () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const CategoryManagementScreen()),
+                        );
+                      }),
+                      _buildMenuItem(Icons.credit_card_outlined, '할부 관리', () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const InstallmentManagementScreen()),
+                        );
+                      }),
+                      _buildMenuItem(Icons.calendar_month_outlined, '고정지출/예산', () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const FixedExpenseScreen()),
+                        );
+                      }),
+                      _buildMenuItem(Icons.info_outline, '버전 정보', () {}),
                     ],
                   ),
                   const SizedBox(height: 25),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildMenuItem(Icons.cloud_upload_outlined, '백업/복구'),
-                      _buildMenuItem(Icons.color_lens_outlined, '테마 설정'),
-                      _buildMenuItem(Icons.lock_outline, '잠금 설정'),
-                      _buildMenuItem(Icons.picture_as_pdf_outlined, '엑셀/PDF로 변환'),
+                      _buildMenuItem(Icons.cloud_upload_outlined, '백업/복구', () {}),
+                      _buildMenuItem(Icons.color_lens_outlined, '테마 설정', () {}),
+                      _buildMenuItem(Icons.lock_outline, '잠금 설정', () {}),
+                      _buildMenuItem(Icons.picture_as_pdf_outlined, '엑셀/PDF로 변환', () {}),
                     ],
                   ),
                 ],
@@ -177,19 +196,22 @@ class _EtcScreenState extends State<EtcScreen> {
     );
   }
 
-  Widget _buildMenuItem(IconData icon, String label) {
-    return SizedBox(
-      width: 80,
-      child: Column(
-        children: [
-          Icon(icon, size: 28, color: Colors.black87),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 12, color: Colors.black87),
-            textAlign: TextAlign.center,
-          ),
-        ],
+  Widget _buildMenuItem(IconData icon, String label, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: 80,
+        child: Column(
+          children: [
+            Icon(icon, size: 28, color: Colors.black87),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 12, color: Colors.black87),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

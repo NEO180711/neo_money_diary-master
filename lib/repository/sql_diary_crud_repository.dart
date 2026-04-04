@@ -2,8 +2,56 @@ import 'package:abc_money_diary/repository/sql_database.dart';
 import 'package:abc_money_diary/widgets/pair.dart';
 
 import '../models/diary_model.dart';
+import 'package:flutter/material.dart';
 
 class SqlDiaryCrudRepository {
+  static const String categoryTableName = 'category';
+  static const String installmentTableName = 'installment';
+
+  /* 카테고리 관련 메서드 */
+
+  // 카테고리 목록 불러오기
+  static Future<List<Map<String, dynamic>>> getCategoryList() async {
+    var db = await SqlDataBase().database;
+    // query()는 결과가 없으면 빈 리스트 []를 반환하므로 try-catch가 필수적이지는 않으나 안전을 위해 유지 가능합니다.
+    return await db.query(categoryTableName, orderBy: 'name ASC');
+  }
+
+  // 카테고리 추가
+  static Future<int> createCategory(String name, int iconCode) async {
+    var db = await SqlDataBase().database;
+    return await db.insert(categoryTableName, {
+      'name': name,
+      'iconCode': iconCode,
+    });
+  }
+
+  // 카테고리 삭제
+  static Future<int> deleteCategory(int id) async {
+    var db = await SqlDataBase().database;
+    return await db.delete(categoryTableName, where: 'id = ?', whereArgs: [id]);
+  }
+
+  /* 할부 관련 메서드 */
+
+  static Future<List<Map<String, dynamic>>> getInstallmentList() async {
+    var db = await SqlDataBase().database;
+    try {
+      return await db.query(installmentTableName);
+    } catch (e) {
+      return [];
+    }
+  }
+
+  static Future<int> createInstallment(Map<String, dynamic> data) async {
+    var db = await SqlDataBase().database;
+    return await db.insert(installmentTableName, data);
+  }
+
+  static Future<int> deleteInstallment(int id) async {
+    var db = await SqlDataBase().database;
+    return await db.delete(installmentTableName, where: 'id = ?', whereArgs: [id]);
+  }
 
   //가계부 만들기
   static Future<Diary> create(Diary diary) async {
