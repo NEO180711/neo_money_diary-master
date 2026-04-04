@@ -31,7 +31,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
   }
 
   Future<void> _loadDbCategories() async {
-    final list = await SupabaseRepository.getCategoryList();
+    final list = await SupabaseDiaryRepository.getCategoryList();
     setState(() {
       _dbCategories = list;
     });

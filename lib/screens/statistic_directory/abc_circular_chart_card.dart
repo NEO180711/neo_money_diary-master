@@ -19,7 +19,7 @@ class _AbcCircularChartCardState extends State<AbcCircularChartCard> {
 
   Future<List<Pair>> _getABCcategory(String month, String abc) async {
     List<Pair> newList =
-        await SupabaseRepository.getABCcategory(month, abc);
+        await SupabaseDiaryRepository.getABCcategory(month, abc);
     categoryMoney = newList;
     return categoryMoney;
   }

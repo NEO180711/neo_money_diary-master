@@ -83,7 +83,7 @@ class _ModifyDiaryScreenState extends State<ModifyDiaryScreen> {
                         builder: (context) => HomeScreen(),
                       ),
                       (route) => false);
-                  await SupabaseRepository.update(modifyDiary);
+                  await SupabaseDiaryRepository.update(modifyDiary);
                   update();
                 },
                 child: Text('예')),
@@ -114,7 +114,7 @@ class _ModifyDiaryScreenState extends State<ModifyDiaryScreen> {
             builder: (context) => HomeScreen(),
           ),
           (route) => false);
-      await SupabaseRepository.update(modifyDiary);
+      await SupabaseDiaryRepository.update(modifyDiary);
       update();
     }
   }
@@ -550,14 +550,14 @@ class _ModifyDiaryScreenState extends State<ModifyDiaryScreen> {
 
   // ABC 선택 관련 변수
   String getABC() {
-    if (ABC == '') {
+    if (abc == '') {
       String preABC = widget.diary.type!;
       return preABC;
     }
-    return ABC;
+    return abc;
   }
 
-  String ABC = '';
+  String abc = '';
   bool aButton = false;
   bool bButton = false;
   bool cButton = false;
@@ -569,18 +569,18 @@ class _ModifyDiaryScreenState extends State<ModifyDiaryScreen> {
       aButton = true;
       bButton = false;
       cButton = false;
-      ABC = 'A';
+      abc = 'A';
     } else if (index == 1) {
       aButton = false;
       bButton = true;
       cButton = false;
-      ABC = 'B';
+      abc = 'B';
     }
     if (index == 2) {
       aButton = false;
       bButton = false;
       cButton = true;
-      ABC = 'C';
+      abc = 'C';
     }
     setState(() {
       isSelected = [aButton, bButton, cButton];
@@ -593,8 +593,8 @@ class _ModifyDiaryScreenState extends State<ModifyDiaryScreen> {
   // 기본 오늘 날짜 구하는 곳
   String getToday() {
     if (selectedDate == "") {
-      String Today = widget.diary.date!;
-      return Today;
+      String today = widget.diary.date!;
+      return today;
     }
     return selectedDate;
   }
@@ -633,8 +633,8 @@ class _ModifyDiaryScreenState extends State<ModifyDiaryScreen> {
   // 기본 지금 시간 구하는 곳
   String getTimeNow() {
     if (selectedTime == "") {
-      String NowTime = widget.diary.time!;
-      return NowTime;
+      String nowTime = widget.diary.time!;
+      return nowTime;
     }
     return selectedTime;
   }

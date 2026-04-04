@@ -210,7 +210,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   //하루치 가계부 목록 가져오기
   Future<List<Diary>> _loadDiaryList(DateTime date) async {
-    return await SupabaseRepository.getDayList(
+    return await SupabaseDiaryRepository.getDayList(
         DateFormat('yyyy-MM-dd').format(date));
   }
 }

@@ -18,7 +18,7 @@ class _ListChartCardState extends State<ListChartCard> {
   Map<String, String> categoryMap = {};
 
   Future<List<Pair>> _getTotalCategory(String month) async {
-    List<Pair> newList = await SupabaseRepository.getTotalCategory(month);
+    List<Pair> newList = await SupabaseDiaryRepository.getTotalCategory(month);
     categoryMoney = newList;
     return categoryMoney;
   }

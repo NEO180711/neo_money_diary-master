@@ -179,7 +179,7 @@ class TotalAbcMoney extends StatelessWidget {
 
   // 특정 타입(수입/지출)의 합계 계산
   Future<String> _loadTotalMoney(String type) async {
-    List<Diary> list = await SupabaseRepository.getMonthList(diaryMonth);
+    List<Diary> list = await SupabaseDiaryRepository.getMonthList(diaryMonth);
     int total = 0;
     for (var diary in list) {
       if (diary.type == type) {
@@ -191,7 +191,7 @@ class TotalAbcMoney extends StatelessWidget {
 
   // 합계 계산 (수입 - 지출)
   Future<String> _loadSumMoney() async {
-    List<Diary> list = await SupabaseRepository.getMonthList(diaryMonth);
+    List<Diary> list = await SupabaseDiaryRepository.getMonthList(diaryMonth);
     int income = 0;
     int expense = 0;
     for (var diary in list) {

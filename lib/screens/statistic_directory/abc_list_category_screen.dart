@@ -180,7 +180,7 @@ class _ABCListCategoryScreenState extends State<ABCListCategoryScreen> {
   }
 
   Future<List<Diary>> _loadDiaryList(String text, String month, String abc) async {
-    return await SupabaseRepository.getSearchABCList(text, month, abc);
+    return await SupabaseDiaryRepository.getSearchABCList(text, month, abc);
   }
 
   void update() => setState(() {});

@@ -35,7 +35,7 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
   // 1. 기본 카테고리를 제거하고 DB 데이터만 로드하도록 수정
   Future<void> _loadCategories() async {
     try {
-      final customCategories = await SupabaseRepository.getCategoryList();
+      final customCategories = await SupabaseDiaryRepository.getCategoryList();
       
       setState(() {
         // 이제 코드상의 defaultCategories 없이 DB 데이터만 사용합니다.
@@ -136,8 +136,8 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_nameController.text.isNotEmpty) {
-                        // Repository의 update 함수도 icon(String)을 받도록 확인 필요
-                        await SupabaseRepository.updateCategory(category['id'], _nameController.text, _selectedIcon);
+                        await SupabaseDiaryRepository.updateCategory(category['id'], _nameController.text, _selectedIcon);
+                        if (!mounted) return;
                         _loadCategories();
                         Navigator.pop(context);
                       }
@@ -223,7 +223,8 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_nameController.text.isNotEmpty) {
-                        await SupabaseRepository.createCategory(_nameController.text, _selectedIcon);
+                        await SupabaseDiaryRepository.createCategory(_nameController.text, _selectedIcon);
+                        if (!mounted) return;
                         _loadCategories();
                         Navigator.pop(context);
                       }
@@ -318,7 +319,8 @@ class _CategoryManagementScreenState extends State<CategoryManagementScreen> {
           ),
           TextButton(
             onPressed: () async {
-              await SupabaseRepository.deleteCategory(cat['id']);
+              await SupabaseDiaryRepository.deleteCategory(cat['id']);
+              if (!mounted) return;
               _loadCategories();
               Navigator.pop(context);
             },

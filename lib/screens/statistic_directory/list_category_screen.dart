@@ -172,7 +172,7 @@ class _ListCategoryScreenState extends State<ListCategoryScreen> {
   }
 
   Future<List<Diary>> _loadDiaryList(String text, String month) async {
-    return await SupabaseRepository.getSearchList(text, month);
+    return await SupabaseDiaryRepository.getSearchList(text, month);
   }
 
   //돈 3글자마다 ',' 넣어주기

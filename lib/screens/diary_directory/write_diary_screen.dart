@@ -54,7 +54,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
                   );
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  await SupabaseRepository.create(diary);
+                  await SupabaseDiaryRepository.create(diary);
 
                   update();
                 },
@@ -85,7 +85,7 @@ class _WriteDiaryScreenState extends State<WriteDiaryScreen> {
             : _paymentTextEditingController.text,
       );
       Navigator.pop(context);
-      await SupabaseRepository.create(diary);
+      await SupabaseDiaryRepository.create(diary);
 
       update();
     }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/diary_model.dart';
-import '../../repository/supabase_diary_repository.dart';
+import 'package:abc_money_diary/repository/supabase_diary_repository.dart';
 import 'modify_diary_screen.dart';
 
 class DayDiaryDetailWidget extends StatefulWidget {
@@ -53,7 +53,7 @@ class _DayDiaryDetailWidgetState extends State<DayDiaryDetailWidget> {
         actions: [
           TextButton(
             onPressed: () {
-              SupabaseRepository.delete(diary.id!);
+              SupabaseDiaryRepository.delete(diary.id!);
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen(),), (route) => false);
               update();
             },

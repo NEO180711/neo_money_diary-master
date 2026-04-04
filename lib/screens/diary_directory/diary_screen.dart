@@ -234,7 +234,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
   //한달치 가계부 목록 가져오기
   Future<List<Diary>> _loadDiaryList(String month) async {
-    return await SupabaseRepository.getMonthList(month);
+    return await SupabaseDiaryRepository.getMonthList(month);
   }
 
   //ABC 금액들 보여줄 때 작동하는 부분들

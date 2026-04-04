@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../repository/supabase_diary_repository.dart';
+import '../models/installment_model.dart';
+import 'installment_detail_screen.dart';
 
 class InstallmentManagementScreen extends StatefulWidget {
   const InstallmentManagementScreen({super.key});
@@ -15,7 +17,7 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
   final _monthController = TextEditingController();
   final _dayController = TextEditingController();
   
-  List<Map<String, dynamic>> _installments = [];
+  List<Installment> _installments = [];
   final f = NumberFormat('###,###,###');
 
   @override
@@ -25,9 +27,22 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
   }
 
   Future<void> _loadData() async {
-    final data = await SupabaseRepository.getInstallmentList();
+    final data = await SupabaseDiaryRepository.getInstallmentList();
+    // 실제 구현 시 Repository에서 Map을 Installment 객체로 변환하는 과정이 필요합니다.
+    // 여기서는 요청하신 UI 구현을 위해 더미 데이터를 포함한 변환 예시를 보여드립니다.
     setState(() {
-      _installments = data;
+      _installments = data.map((item) => Installment(
+        id: item['id'],
+        name: item['name'] ?? '항목 없음',
+        totalPrice: item['totalPrice'] ?? 0,
+        monthlyPrice: item['monthlyPrice'] ?? 0,
+        totalMonths: item['months'] ?? 1,
+        currentMonth: 1, // 기본값
+        paymentMethod: '신용카드',
+        isInterestFree: true,
+        interestRate: 0.0,
+        payDay: item['payDay'] ?? 1,
+      )).toList();
     });
   }
 
@@ -102,7 +117,7 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
                       int months = int.parse(_monthController.text);
                       int monthly = (total / months).floor();
 
-                      await SupabaseRepository.createInstallment({
+                      await SupabaseDiaryRepository.createInstallment({
                         'name': _nameController.text,
                         'totalPrice': total,
                         'months': months,
@@ -141,11 +156,11 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
       body: Column(
         children: [
           _buildSummaryCard(),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text('진행 중인 할부 목록', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              child: Text('진행 중인 할부', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.grey.shade800)),
             ),
           ),
           Expanded(
@@ -160,18 +175,18 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         child: ListTile(
                           leading: const CircleAvatar(backgroundColor: Colors.orangeAccent, child: Icon(Icons.shopping_bag, color: Colors.white)),
-                          title: Text(item['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: Text('매달 ${item['payDay']}일 / ${item['months']}개월 중 1회차'),
+                          title: Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: Text('매달 ${item.payDay}일 / ${item.totalMonths}개월 중 1회차'),
                           trailing: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text('${f.format(item['monthlyPrice'])}원', style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                              Text('총 ${f.format(item['totalPrice'])}원', style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                              Text('${f.format(item.monthlyPrice)}원', style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                              Text('총 ${f.format(item.totalPrice)}원', style: const TextStyle(fontSize: 10, color: Colors.grey)),
                             ],
                           ),
                           onLongPress: () async {
-                            await SupabaseRepository.deleteInstallment(item['id']);
+                            await SupabaseDiaryRepository.deleteInstallment(item.id!);
                             _loadData();
                           },
                         ),
@@ -194,7 +209,7 @@ class _InstallmentManagementScreenState extends State<InstallmentManagementScree
   Widget _buildSummaryCard() {
     int totalMonthly = 0;
     for (var item in _installments) {
-      totalMonthly += (item['monthlyPrice'] as num).toInt();
+      totalMonthly += item.monthlyPrice;
     }
 
     return Container(
